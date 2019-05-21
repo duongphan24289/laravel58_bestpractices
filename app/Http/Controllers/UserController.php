@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
 use App\Http\Services\UserService;
 
 class UserController extends Controller
@@ -19,5 +18,16 @@ class UserController extends Controller
 
     public function store(UserRequest $request){
         // TODO
+    }
+
+    public function index(){
+
+        // if success
+         return $this->success([]);
+
+        // if failure
+        $errorCode = 400;
+        $errorMessage = 'Parameters request is invalid.';
+        return $this->error($errorCode, $errorMessage)->respond($errorCode);
     }
 }
