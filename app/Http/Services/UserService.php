@@ -15,6 +15,11 @@ class UserService {
     }
 
     public function create($data){
-        return $this->user->save($data);
+
+        return $this->user->create($data);
+    }
+
+    public function createToken(){
+        return $this->user->generateToken();
     }
 }

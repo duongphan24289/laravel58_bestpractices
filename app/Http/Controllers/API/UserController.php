@@ -16,10 +16,8 @@ class UserController extends Controller
         $this->userService = $user;
     }
 
-    public function store(UserRequest $request)
+    public function detail($id)
     {
-        $validated = $request->validated();
-        $response = $this->userService->create($validated);
-        return $this->success($response);
+
     }
 }

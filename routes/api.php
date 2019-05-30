@@ -20,20 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 Route::namespace('API')->group(function(){
-   Route::prefix('users')->group(function(){
-      Route::post('/', 'UserController@store')->name('register');
-   });
-});
+    Route::post('login', 'PassportController@login')->name('login');
+    Route::prefix('users')->group(function(){
+        Route::post('/', 'PassportController@store')->name('register');
+        Route::middleware('auth:api')->group(function(){
+            Route::post('/','PassportController@detail')->name('profile');
+        });
 
-//Route::group(['namespace' => 'API'], function(){
-//    /*
-//     * Login
-//     */
-//    Route::post('login', 'AuthController@login')->name('login');
-//
-//    /*
-//     * Register user
-//     */
-//    Route::
-//    Route::prefix('users')->post('/', 'UserController@store')->name('register');
-//});
+    });
+});

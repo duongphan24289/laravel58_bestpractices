@@ -122,15 +122,12 @@ class Handler extends ExceptionHandler
             default:
                 $response['message'] = $statusCode === 500 ? "Whoops, looks like something went wrong" : $exception->getMessage();
                 break;
-
         }
-//        dd($exception);
-//        dd($exception->getTrace());
 
         if(config('app.debug'))
         {
-//            $response['trace'] = $exception->getTrace();
-//            $response['code'] = $exception->getCode();
+            $response['trace'] = method_exists($exception, 'getTrace') ? $exception->getTrace() : null;
+            $response['code'] = method_exists($exception, 'getCode') ? $exception->getCode() : null;
         }
         $response['status'] = $statusCode;
 
