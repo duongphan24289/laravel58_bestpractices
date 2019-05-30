@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    const PERSONAL_ACCESS_TOKEN = 'Personal Access Token';
+
+    use HasApiTokens, Notifiable;
 
     protected $dates = ['created_at', 'updated_at'];
 
@@ -18,7 +21,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'last_name',
+        'first_name',
+        'email',
+        'password',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -39,9 +47,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)->first();
+    }
+
     public function getSomeDateAttribute($date)
     {
         return $date->format('m-d');
     }
 
+    public function generateToken()
+    {
+        return $this->createToken(self::PERSONAL_ACCESS_TOKEN);
+    }
 }

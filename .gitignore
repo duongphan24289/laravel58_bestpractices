@@ -16,3 +16,6 @@ package-lock.json
 run
 docker-compose.yml
 docker
+.phpstorm.meta.php
+_ide_helper.php
+

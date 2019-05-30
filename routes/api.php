@@ -13,9 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
 
+Route::namespace('API')->group(function(){
+    Route::post('login', 'PassportController@login')->name('login');
+    Route::prefix('users')->group(function(){
+        Route::post('/', 'PassportController@store')->name('register');
+        Route::middleware('auth:api')->group(function(){
+            Route::post('/','PassportController@detail')->name('profile');
+        });
 
-Route::get('test', 'UserController@index')->name('test');
+    });
+});
