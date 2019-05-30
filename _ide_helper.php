@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.7 on 2019-05-21 02:17:04.
+ * Generated for Laravel 5.8.7 on 2019-05-21 04:22:40.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14590,6 +14590,33 @@ namespace Flugg\Responder\Facades {
         }
          
     }
+
+    /**
+     * A facade class responsible for giving easy access to the transformer service.
+     *
+     * @package flugger/laravel-responder
+     * @author Alexander Tømmerås <flugged@gmail.com>
+     * @license The MIT License
+     * @see \Flugg\Responder\Transformer
+     */ 
+    class Transformation {
+        
+        /**
+         * Make a new transformation to transform data without serializing.
+         *
+         * @param mixed $data
+         * @param \Flugg\Responder\Transformers\Transformer|callable|string|null $transformer
+         * @param string|null $resourceKey
+         * @return \Flugg\Responder\TransformBuilder 
+         * @static 
+         */ 
+        public static function make($data = null, $transformer = null, $resourceKey = null)
+        {
+                        /** @var \Flugg\Responder\Transformation $instance */
+                        return $instance->make($data, $transformer, $resourceKey);
+        }
+         
+    }
  
 }
 
@@ -17210,6 +17237,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
 
     class Responder extends \Flugg\Responder\Facades\Responder {}
+
+    class Transformation extends \Flugg\Responder\Facades\Transformation {}
  
 }
 

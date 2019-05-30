@@ -12,3 +12,4 @@ yarn-error.log
 composer.lock
 package-lock.json
 .idea
+.phpstorm.meta.php

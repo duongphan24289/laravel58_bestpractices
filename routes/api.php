@@ -13,9 +13,27 @@ use Illuminate\Http\Request;
 |
 */
 
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
 
+Route::namespace('API')->group(function(){
+   Route::prefix('users')->group(function(){
+      Route::post('/', 'UserController@store')->name('register');
+   });
+});
 
-Route::get('test', 'UserController@index')->name('test');
+//Route::group(['namespace' => 'API'], function(){
+//    /*
+//     * Login
+//     */
+//    Route::post('login', 'AuthController@login')->name('login');
+//
+//    /*
+//     * Register user
+//     */
+//    Route::
+//    Route::prefix('users')->post('/', 'UserController@store')->name('register');
+//});

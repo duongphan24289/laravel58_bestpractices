@@ -2,15 +2,19 @@
 
 namespace App\Http\Services;
 
+use App\User;
+
 class UserService {
 
-    public function __construct()
+    protected $user;
+
+    public function __construct(User $user)
     {
         // TODO
-        // construct function
+        $this->user = $user;
     }
 
     public function create($data){
-
+        return $this->user->save($data);
     }
 }
