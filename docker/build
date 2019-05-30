@@ -1,6 +1,0 @@
-#!/bin/bash
-
-docker build -t dutch/app:latest ./app
-docker build -t dutch/node:latest ./node
-docker build -t dutch/mysql:latest ./mysql
-docker build -t dutch/redis:latest ./redis

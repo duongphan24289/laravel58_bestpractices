@@ -12,3 +12,7 @@ yarn-error.log
 composer.lock
 package-lock.json
 .idea
+
+run
+docker-compose.yml
+docker
