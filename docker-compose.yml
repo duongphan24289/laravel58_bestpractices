@@ -1,0 +1,62 @@
+version: '2.1'
+services:
+  app:
+    build:
+      context: ./docker/app
+    image: dutch/app:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - .:/var/www/html:cached
+    networks:
+      - ductch_net
+  redis:
+    build:
+      context: ./docker/redis
+    image: dutch/redis:latest
+    volumes:
+      - redisdata:/data
+    networks:
+      - ductch_net
+
+  mysql:
+    build:
+      context: ./docker/mysql
+    image: dutch/mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laractices
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - ductch_net
+
+  node:
+    build:
+      context: ./docker/node
+    image: dutch/node:latest
+    volumes:
+      - .:/var/www/html
+
+  blackfire:
+    image: blackfire/blackfire
+    environment:
+      BLACKFIRE_SERVER_ID:
+      BLACKFIRE_SERVER_TOKEN:
+    networks:
+      - ductch_net
+
+volumes:
+  redisdata:
+    driver: local
+  mysqldata:
+    driver: local
+
+networks:
+  ductch_net:
+    driver: bridge
