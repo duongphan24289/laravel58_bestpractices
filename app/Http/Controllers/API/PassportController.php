@@ -8,7 +8,6 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\UserService as PrimaryService;
-use Illuminate\Validation\UnauthorizedException;
 
 class PassportController extends Controller
 {
