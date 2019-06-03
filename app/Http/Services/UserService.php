@@ -2,24 +2,19 @@
 
 namespace App\Http\Services;
 
-use App\User;
+use App\Repositories\UserRepository;
 
 class UserService {
 
-    protected $user;
+    protected $userRepository;
 
-    public function __construct(User $user)
+    public function __construct(UserRepository $userRepository)
     {
-        // TODO
-        $this->user = $user;
+        $this->userRepository = $userRepository;
     }
 
     public function create($data){
 
-        return $this->user->create($data);
-    }
-
-    public function createToken(){
-        return $this->user->generateToken();
+        return $this->userRepository->create($data);
     }
 }

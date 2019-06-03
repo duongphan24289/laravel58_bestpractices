@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\UserService as PrimaryService;
 
@@ -28,24 +25,6 @@ class PassportController extends Controller
         $user = $this->primaryService->create($request->validated());
 
         return responder()->success($user);
-    }
-
-    /**
-     * @param LoginRequest $request
-     * @return \Flugg\Responder\Http\Responses\SuccessResponseBuilder
-     * @throws AuthenticationException
-     */
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->validated();
-        if(auth()->attempt($credentials))
-        {
-            $token = auth()->user()->generateToken()->accessToken;
-
-            return responder()->success(['token' => $token]);
-        }
-
-        throw new AuthenticationException();
     }
 
     /**
