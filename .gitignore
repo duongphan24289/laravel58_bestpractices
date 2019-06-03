@@ -12,5 +12,10 @@ yarn-error.log
 composer.lock
 package-lock.json
 .idea
+
+run
+docker-compose.yml
+docker
 .phpstorm.meta.php
 _ide_helper.php
+
