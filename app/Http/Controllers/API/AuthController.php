@@ -3,30 +3,30 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
+use Illuminate\Auth\AuthenticationException;
 use App\Http\Controllers\Controller;
-use Auth;
 
 class AuthController extends Controller
 {
     public function __construct()
-    {
-        // TODO
-    }
+    {}
 
+    /**
+     * @param LoginRequest $request
+     * @return \Flugg\Responder\Http\Responses\SuccessResponseBuilder
+     * @throws AuthenticationException
+     */
     public function login(LoginRequest $request)
     {
-        $credentials = [
-            'email' => request('email'),
-            'password' => request('password'),
-        ];
+        $credentials = $request->validated();
+        if(auth()->attempt($credentials))
+        {
+            $token = auth()->user()->generateToken()->accessToken;
 
-        if(Auth::attempt($credentials)){
-            $user = Auth::user();
-
-
+            return responder()->success(['token' => $token]);
         }
 
-        return $this->error('');
+        throw new AuthenticationException();
+
     }
 }
