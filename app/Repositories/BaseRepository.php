@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Filters\FilterTrait;
 use App\Repositories\Contracts\RepositoryInterface;
 use App\Repositories\Exceptions\RepositoryException;
 use Illuminate\Container\Container as Application;

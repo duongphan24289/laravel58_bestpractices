@@ -17,4 +17,9 @@ class UserService {
 
         return $this->userRepository->create($data);
     }
+
+    public function testSearch($params = [])
+    {
+        return $this->userRepository->testSearch($params);
+    }
 }
