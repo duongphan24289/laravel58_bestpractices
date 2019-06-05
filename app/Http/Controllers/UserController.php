@@ -30,4 +30,10 @@ class UserController extends Controller
         $errorMessage = 'Parameters request is invalid.';
         return $this->error($errorCode, $errorMessage)->respond($errorCode);
     }
+
+    public function presenter()
+    {
+        $users = $this->userService->all();
+        return view('presenter', ['users' => $users]);
+    }
 }

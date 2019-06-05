@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/users', 'UserController@presenter');
+
+//Route::prefix('users')->group(function () {
+//    Route::get('',);
+//});

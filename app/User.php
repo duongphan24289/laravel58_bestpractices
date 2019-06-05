@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Presenters\PresentableTrait;
+use App\Presenters\UserPresenter;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,9 +13,12 @@ class User extends Authenticatable
 {
     const PERSONAL_ACCESS_TOKEN = 'Personal Access Token';
 
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, PresentableTrait;
 
     protected $dates = ['created_at', 'updated_at'];
+
+//    Present user
+    protected $presenter = UserPresenter::class;
 
     /**
      * The attributes that are mass assignable.
