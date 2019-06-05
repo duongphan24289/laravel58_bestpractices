@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Http\Services\UserService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -29,5 +30,14 @@ class UserController extends Controller
         $errorCode = 400;
         $errorMessage = 'Parameters request is invalid.';
         return $this->error($errorCode, $errorMessage)->respond($errorCode);
+    }
+
+    public function testSearch(Request $request)
+    {
+        $params = $request->all();
+
+        $users = $this->userService->testSearch($params);
+
+        return view('search', ['users' => $users]);
     }
 }
