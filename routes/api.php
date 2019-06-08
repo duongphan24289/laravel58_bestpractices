@@ -19,10 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
+if(! App::environment('local')){
+    URL::forceScheme('https');
+}
+
 Route::namespace('API')->group(function(){
     Route::post('login', 'AuthController@login')->name('login');
     Route::prefix('users')->group(function(){
-        Route::post('/', 'PassportController@store')->name('register');
+        Route::post('/', 'UserController@store')->name('register');
         Route::middleware('auth:api')->group(function(){
             Route::get('/','PassportController@detail')->name('profile');
         });

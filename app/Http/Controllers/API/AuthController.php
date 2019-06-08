@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Auth\AuthenticationException;
 use App\Http\Controllers\Controller;
+use JWTAuth;
 
 class AuthController extends Controller
 {
@@ -19,14 +20,11 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        if(auth()->attempt($credentials))
+        if(! $token = JWTAuth::attempt($credentials))
         {
-            $token = auth()->user()->generateToken()->accessToken;
-
-            return responder()->success(['token' => $token]);
+            throw new AuthenticationException();
         }
 
-        throw new AuthenticationException();
-
+        return responder()->success(['token' => $token]);
     }
 }
