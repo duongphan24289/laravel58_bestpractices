@@ -30,6 +30,9 @@ Route::namespace('API')->group(function(){
         Route::middleware('auth:api')->group(function(){
             Route::get('/','PassportController@detail')->name('profile');
         });
+    });
 
+    Route::prefix('s3')->group(function(){
+        Route::post('upload', 'UploadController@upload')->name('s3.upload');
     });
 });

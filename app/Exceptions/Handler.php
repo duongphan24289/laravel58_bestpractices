@@ -80,6 +80,8 @@ class Handler extends ExceptionHandler
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 
+        dd($exception->getMessage());
+
         return $this->customApiResponse($exception);
     }
 
