@@ -11,10 +11,6 @@
 |
 */
 
-if(! app()->environment('local')){
-    URL::forceScheme('https');
-}
-
 Route::get('/', function () {
     return view('welcome');
 });

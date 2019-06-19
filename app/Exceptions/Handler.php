@@ -80,8 +80,6 @@ class Handler extends ExceptionHandler
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 
-        dd($exception->getMessage());
-
         return $this->customApiResponse($exception);
     }
 
@@ -131,6 +129,7 @@ class Handler extends ExceptionHandler
             $response['trace'] = method_exists($exception, 'getTrace') ? $exception->getTrace() : null;
             $response['code'] = method_exists($exception, 'getCode') ? $exception->getCode() : null;
         }
+
         $response['status'] = $statusCode;
 
         return response()->json($response, $statusCode);

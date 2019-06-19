@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Traits\FileHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Str;
 
 class UploadController extends Controller
 {
@@ -16,8 +17,16 @@ class UploadController extends Controller
 
     public function upload(Request $request)
     {
-        $data = $this->uploadToS3($request->file('file'), 'abc');
+        // TODO
+        $this->uploadToS3($request->file('file'), (string) Str::uuid());
+        return responder()->success([]);
+    }
 
-        return responder()->success($data);
+    public function getUriFromStorage(Request $request)
+    {
+        // TODO
+        $uri = $this->generateUrl('abc.jpeg');
+
+        return responder()->success(['url' => $uri]);
     }
 }

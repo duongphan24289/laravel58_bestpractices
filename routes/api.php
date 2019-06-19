@@ -19,10 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
-if(! App::environment('local')){
-    URL::forceScheme('https');
-}
-
 Route::namespace('API')->group(function(){
     Route::post('login', 'AuthController@login')->name('login');
     Route::prefix('users')->group(function(){
@@ -34,5 +30,9 @@ Route::namespace('API')->group(function(){
 
     Route::prefix('s3')->group(function(){
         Route::post('upload', 'UploadController@upload')->name('s3.upload');
+    });
+
+    Route::prefix('resource')->group(function(){
+       Route::get('{name}', 'ResourceController@getUrl')->name('resource.url');
     });
 });

@@ -20,14 +20,14 @@ trait FileHelper
                 'credentials' => [
                     'key' => config('filesystems.disks.s3.key'),
                     'secret' => config('filesystems.disks.s3.secret'),
-//                    'token' => config('filesystems.disks.s3.token')
+                    'token' => config('filesystems.disks.s3.token')
                 ],
                 'region' => config('filesystems.disks.s3.region'),
                 'version' => 'latest'
             ];
 
             if(! empty(config('filesystems.disks.s3.url'))){
-                $parameters['url'] = config('filesystems.disks.s3.url');
+                $parameters['endpoint'] = config('filesystems.disks.s3.url');
             }
 
             return new S3Client($parameters);
@@ -36,20 +36,21 @@ trait FileHelper
 
     public function uploadToS3(UploadedFile $uploadedFile, $name, $contentType = "")
     {
-        if($uploadedFile){
+        if ($uploadedFile) {
             $filePath = $uploadedFile->getRealPath();
             $key = "{$name}.{$uploadedFile->extension()}";
             $result = $this->initClient()->putObject([
                 'Bucket' => config('filesystems.disks.s3.bucket'),
                 'Key' => $key,
                 'SourceFile' => $filePath,
-                'ContentType' => $contentType ?: $uploadedFile->getMimeType()
+                'ContentType' => $contentType ?: $uploadedFile->getMimeType(),
+                // 'ACL'    => 'public-read'
             ]);
 
-            if(! empty($result)
+            if (!empty($result)
                 && !empty($result['@metadata']['statusCode'])
                 && $result['@metadata']['statusCode'] == 200
-            ){
+            ) {
                 return true;
             }
 
@@ -62,8 +63,18 @@ trait FileHelper
         // TODO
     }
 
-    public function generateUrl()
+    public function generateUrl($fileName)
     {
-        // TODO
+        $command = $this->initClient()->getCommand(
+            'GetObject',
+            [
+                'Bucket' => config('filesystems.disks.s3.bucket'),
+                'Key' => $fileName
+            ]
+        );
+
+        $response = $this->initClient()->createPresignedRequest($command,'+10 minutes');
+
+        return (string) $response->getUri();
     }
 }
