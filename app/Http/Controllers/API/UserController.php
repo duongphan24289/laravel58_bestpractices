@@ -30,5 +30,7 @@ class UserController extends Controller
         $user = $this->userService->create($request->validated());
 
         $this->initiateEmailActivation($user);
+
+        return responder()->success($user);
     }
 }

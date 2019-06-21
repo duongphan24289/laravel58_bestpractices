@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
-interface ActivationRepository
+use App\Repositories\Contracts\RepositoryInterface;
+
+interface ActivationRepository extends RepositoryInterface
 {
 
 }

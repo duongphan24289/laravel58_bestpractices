@@ -23,9 +23,6 @@ Route::namespace('API')->group(function(){
     Route::post('login', 'AuthController@login')->name('login');
     Route::prefix('users')->group(function(){
         Route::post('/', 'UserController@store')->name('register');
-        Route::middleware('auth:api')->group(function(){
-            Route::get('/','PassportController@detail')->name('profile');
-        });
     });
 
     Route::prefix('s3')->group(function(){
